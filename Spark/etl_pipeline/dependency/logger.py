@@ -1,11 +1,11 @@
 import logging
 
-class Logger(object, spark):
+class Logger():
     def __init__(self, spark):
         conf = spark.sparkContext.getConf()
         app_id = conf.get('spark.app.id')
         app_name = conf.get('spark.app.name')
-        message_prefix = '<place for app and app_id >'
+        message_prefix = '<' + app_name + ' ' + app_id + '>'
         self.logger = logging.getLogger(message_prefix)
 
 

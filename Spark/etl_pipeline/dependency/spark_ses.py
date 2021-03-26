@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-from dependency import logger
+from dependency.logger import Logger
 
 
 def start_spark(app_name = 'spark_builder'):
@@ -11,7 +11,7 @@ def start_spark(app_name = 'spark_builder'):
 
     # create session
     spark_sess = spark_builder.getOrCreate()
-    spark_logger =  logger.Logger(spark_sess)
+    spark_logger =  Logger(spark_sess)
 
     return spark_sess, spark_logger
 
