@@ -18,7 +18,7 @@ def main():
     raw_df = extract_data(spark_sess)
     create_temp_tableOrView(raw_df, 'store_sale')
     transformed_df = transform_data(spark_sess, 'store_sale')
-    load_data(transformed_df)
+    load_data(transformed_df, log)
 
 
 def extract_data(sess):
@@ -67,8 +67,10 @@ def transform_data(sess, view_name):
     df = sess.sql(location_wise_profit_sql)  
     return df
 
-def load_data(df):
-    df.coalesce(1).write.format('com.databricks.spark.csv').save('output/data_data_output.csv',header = 'true')
+def load_data(df, log_handle):
+    log_handle.info('Data Loading starting')
+    df.coalesce(1).write.format('com.databricks.spark.csv').mode('overwrite').save('output/data_output', header=True)
+    log_handle.info('Data loading completed successfully')
     return None
 
 
